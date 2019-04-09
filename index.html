@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PlantsVsZombies</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg__img">
+  <div id="container">
+      <div id="legend__left">
+          <div><img class="legend__img" src="images/letter_q.png" alt="q"></div>
+          <div><img class="legend__img" src="images/letter_w.png" alt="w"></div>
+          <div><img class="legend__img" src="images/letter_e.png" alt="e"></div>
+          <div><img class="legend__img" src="images/letter_r.png" alt="r"></div>
+          <div><img class="legend__img" src="images/letter_t.png" alt="t"></div>
+      </div>
+        <button onclick="button1Disapear()" id="player1"><strong>1PLAYER</strong></button>
+        <button onclick="button2Disapear()" id="player2"><strong>2PLAYERS</strong></button>
+      <div><canvas id="canvas1" width="900" height="450"></canvas></div>
+      <div><canvas id="canvas2" width="900" height="450"></canvas></div>
+      <div id="legend__right">
+          <div><img class="legend__img" src="images/letter_p.png" alt="p"></div>
+          <div><img class="legend__img" src="images/letter_o.png" alt="o"></div>
+          <div><img class="legend__img" src="images/letter_i.png" alt="i"></div>
+          <div><img class="legend__img" src="images/letter_u.png" alt="u"></div>
+          <div><img class="legend__img" src="images/letter_y.png" alt="y"></div>
+      </div>
+  </div>
+  <div id="legend__bottom">
+    <div id="legend__bottom__left">
+        <div class="item1"><img class="legend__img__bottom" src="images/letter_s.png" alt="S"><img class="text__bang" src="images/bang.png" alt="bang!"></div>
+        <div class="item2"><img class="legend__img__bottom" src="images/letter_a.png" alt="A"><img class="text__charge" src="images/charge.png" alt="Charge!"></div>
+    </div>
+    <div id="legend__bottom__right">
+        <div class="item3"><img class="legend__img__bottom" src="images/letter_l.png" alt="L"><img class="text__bang" src="images/bang.png" alt="bang!"></div>
+        <div class="item4"><img class="legend__img__bottom" src="images/letter_k.png" alt="K"><img class="text__charge" src="images/charge.png" alt="Charge!"></div>
+    </div>  
+  </div>
+  <script src="plantsVsZombies.js"></script>
+</body>
+</html>
+
