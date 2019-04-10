@@ -5,16 +5,22 @@ window.onload = () => {
   const canvas2 = document.getElementById('canvas2')
   const ctx1 = canvas1.getContext('2d')
   const ctx2 = canvas2.getContext('2d')
-  let zombiesArr = []
   let shoots = []
+  let zombiesArr = []
+  let sunArr = []
   let interval
+
+  
   let frames = 0
   const images = {
     bg: 'images/background-canvas.jpg',
     plant1: 'images/plant1.png',
     flower1: 'images/flower1.png',
     zombie: 'images/zombie.png',
-    flowerCharge: 'images/flower-charge.png'
+    flowerCharge: 'images/flower-charge.png',
+    pea: 'images/pea.png',
+    sun: 'images/sun.png',
+    gameOver: 'images/gameOver.png'
   }
 
 
@@ -53,7 +59,7 @@ window.onload = () => {
       ctx2.drawImage(this.img, this.x, this.y, canvas2.width, canvas2.height)
     }
   }
-    //Planta 1 en canvas 1
+
   class Plant1 {
     constructor(y) {
       this.x = 220
@@ -79,6 +85,7 @@ window.onload = () => {
       this.sx += 221
     }
   }
+  
 
   class Flower1 {
     constructor(y) {
@@ -104,21 +111,6 @@ window.onload = () => {
       )
       this.sx += 220
     }
-    charge() {
-          if (this.sx > 3080) this.sx = 0
-          ctx1.drawImage(
-            this.img = new 
-            this.sx,
-            this.sy,
-            220,
-            220,
-            this.x,
-            this.y,
-            50,
-            60
-          )
-          this.sx += 220
-        }
   }
 
   class Zombie {
@@ -145,15 +137,74 @@ window.onload = () => {
         )
         this.sx += 220
           this.x -= 2
+          if (this.x < 180){
+            gameOver();
+          }
+      }
+    }
+
+    class Sun {
+      constructor(y){
+        this.x = 160 
+        this.y = y
+        this.height = 60
+        this.width = 50
+        this.img = new Image()
+        this.img.src = images.sun
+        this.img.onload = () => {
+          this.draw()
+        }
+      }
+      draw(){
+        ctx1.drawImage(this.img, this.x, this.y, this.width, this.height)
       }
     }
 
 
+    class GameOverImg {
+      constructor(){
+        this.x = 0
+        this.y = 0
+        this.img = new Image()
+        this.img.src = images.gameOver
+      }
+      draw(){
+        ctx1.drawImage(this.img, this.x, this.y, canvas1.width, canvas1.height)
+      }
+    }
   
+    class Bullet {
+      constructor(y){
+        this.x          = 260 
+        this.y          = y
+        this.width      = 20
+        this.height     = 20
+        this.img = new Image()
+        this.img.src = images.pea
+      }
+      draw() {
+        ctx1.drawImage(this.img, this.x, this.y, this.width, this.height) 
+        //this.x+=5  
+      }
+      move() {
+        this.x+=5
+      }
+      isTouching(obstacle){
+        return  (this.x < obstacle.x + 220) &&
+        (this.x + 15  > obstacle.x + 80) &&
+        (this.y < obstacle.y + 117) &&
+        (this.y + 15 > obstacle.y)
+      }
+      }
+    
+  
+
   //DEFINICIONES
 
   const board1 = new Board1(images.bg)
   const board2 = new Board2(images.bg)
+
+  const gameoverimg = new GameOverImg()
 
   const plant1 = new Plant1(50)
   const plant1_2 = new Plant1(120)
@@ -167,13 +218,13 @@ window.onload = () => {
   const flower1_4 = new Flower1(260)
   const flower1_5 = new Flower1(330)
 
-  const zombie = new Zombie(70)
-
   //FUNCTIONS
 
   function update() {
+
     ctx1.clearRect(0,0, canvas1.width, canvas1.heigth)
     ctx2.clearRect(0,0, canvas1.width, canvas1.heigth)
+
     board1.draw();
     board2.draw();
 
@@ -189,71 +240,172 @@ window.onload = () => {
     flower1_4.draw();
     flower1_5.draw();
 
-    //chargeFunction();
-    // flower1.charge();
-    // flower1_2.charge();
-    // flower1_3.charge();
-    // flower1_4.charge();
-    // flower1_5.charge();
+    if (frames % 300 === 0){
+      sunArr.unshift(new Sun(randomSun()))
+    }
+    sunGenerator(sunArr)
 
-    if (frames % 150 === 0) {
+
+    if (frames % 20 === 0) {
       zombiesArr.unshift(new Zombie(randomPosition()))
     }
-    zombieGenerator(zombiesArr);
-    console.log(frames)
-    frames++
-  }
+    zombieGenerator(zombiesArr)
 
-  // function chargeFunction() {
-  //   flower1.charge()
-  // }
+    frames++
+
+    shoots.forEach((bullet) => {
+      bullet.draw()
+      bullet.move()
+    })
+
+    checkCollition()
+    
+  }
    
   function randomPosition() {
     let yPositions = [15,75,160,230,310]
-    var rand = yPositions[Math.floor(Math.random() * yPositions.length)];
-    return rand
+    let randY = yPositions[Math.floor(Math.random() * yPositions.length)]
+    return randY
+  }
+
+  function randomSun() {
+    let zPositions = [50,120,190,260,330]
+    let randZ = zPositions[Math.floor(Math.random() * zPositions.length)]
+    return randZ
   }
 
   function button1Disapear() {
-    document.getElementById("player1").style.visibility = "hidden";
+    document.getElementById("player1").style.visibility = "hidden"
     runSinglePlayer();
   }
 
   function button2Disapear() {
-    document.getElementById("player2").style.visibility = "hidden";
+    document.getElementById("player2").style.visibility = "hidden"
     runMultiplayer();
   }
 
   function runSinglePlayer() {
-    if (interval) return;
-    interval = setInterval(update, 1000 / 20);
+    if (interval) return
+    interval = setInterval(update, 1000 / 20)
   }
-
 
   function runMultiplayer() {
-    if (interval) return;
-    interval = setInterval(update, 1000 / 20);
-    board2.draw();
+    if (interval) return
+    interval = setInterval(update, 1000 / 20)
+    board2.draw()
   }
-
 
   function zombieGenerator(zombiesArr) {
     zombiesArr.slice(0, 10).forEach(zombie => {
-      zombie.draw();
-    });
+      zombie.draw()
+    })
   }
 
- 
+  function sunGenerator(sunArr) {
+    sunArr.slice(0,6).forEach(sun => {
+      sun.draw()
+    })
+  }
+
+  function gameOver(){
+    clearInterval(interval)
+    ctx1.clearRect(0, 0, canvas1.width, canvas1.height)
+    gameoverimg.draw()
+  }
+
+  let positionY;
+
+  function chooseFlower(letter) { 
+    if (letter === "Q"){
+      positionY = 62
+    } else if(letter === "W"){
+      positionY = 130
+    }else if(letter === "E"){
+      positionY = 200
+    }else if(letter === "R"){
+      positionY = 270
+    }else if(letter === "T"){
+      positionY = 340
+    } else {
+      positionY = 62
+    }
+  }
+
+  function shoot(){
+    shoots.push(new Bullet(positionY))
+  }
+
+
+  function checkCollition() {
+    zombiesArr.map((z, zi) => {
+      shoots.map((b, bi) => {
+        if (b.isTouching(z)) {
+          shoots.splice(bi, 1)
+          zombiesArr.splice(zi, 1)
+        }
+      })
+    })
+  }
+
 
   //LISTENERS
 
   document.getElementById('player1').onclick = function() {
-    button1Disapear();
-  };
+    button1Disapear()
+  }
 
   document.getElementById('player2').onclick = function() {
-    button2Disapear();
-  };
+    button1Disapear()
+    button2Disapear()
+  }
 
+  document.addEventListener('keydown', (e) => {
+    switch (e.keyCode) {
+      case 81: 
+        chooseFlower("Q")
+        break;
+      case 87: 
+      chooseFlower("W")
+        break;
+        case 69: 
+      chooseFlower("E")
+        break;
+        case 82: 
+      chooseFlower("R")
+        break;
+        case 84:
+      chooseFlower("T")
+        break;
+        case 89: 
+      chooseFlower2("Y")
+        break;
+        case 85:
+      chooseFlower2("U")
+        break;
+        case 73: 
+      chooseFlower2("I")
+        break;
+        case 79: 
+      chooseFlower2("O")
+        break;
+        case 80: 
+      chooseFlower2("P")
+        break;
+        case 83: 
+      shoot() //S
+        break;
+        case 65: 
+      charge("A")
+        break;
+        case 76: 
+        shoot2()
+        break;
+        case 75: 
+        charge("K")
+        default:
+        break;  
+    }
+  })
 
-};
+}
+
