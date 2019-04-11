@@ -31,6 +31,9 @@ window.onload = () => {
   };
 
   let music = "music/Plants vs. Zombies (Main Theme).mp3"
+  let gruñidoMusic = "music/gruñido.wav"
+  let shotMusic = "music/shot.wav"
+  let loseMusic = "music/lose.wav"
 
   //CLASES Y CONSTRUCTORES
 
@@ -126,6 +129,8 @@ window.onload = () => {
     constructor(y) {
       this.x = 650;
       this.y = y;
+      this.music = new Audio()
+      this.music.src = gruñidoMusic
       this.img = new Image();
       this.img.src = images.zombie;
       this.sx = 0;
@@ -173,6 +178,8 @@ window.onload = () => {
     constructor() {
       this.x = 0;
       this.y = 0;
+      this.music = new Audio()
+      this.music.src = loseMusic
       this.img = new Image();
       this.img.src = images.gameOver;
     }
@@ -187,6 +194,8 @@ window.onload = () => {
       this.y = y;
       this.width = 20;
       this.height = 20;
+      this.music = new Audio()
+      this.music.src = shotMusic
       this.img = new Image();
       this.img.src = images.pea;
     }
@@ -263,6 +272,8 @@ window.onload = () => {
     constructor(y) {
       this.x = 650;
       this.y = y;
+      this.music = new Audio()
+      this.music.src = gruñidoMusic
       this.img = new Image();
       this.img.src = images.zombie;
       this.sx = 0;
@@ -310,6 +321,8 @@ window.onload = () => {
     constructor() {
       this.x = 0;
       this.y = 0;
+      this.music = new Audio()
+      this.music.src = loseMusic
       this.img = new Image();
       this.img.src = images.gameOver;
     }
@@ -324,6 +337,8 @@ window.onload = () => {
       this.y = y;
       this.width = 20;
       this.height = 20;
+      this.music = new Audio()
+      this.music.src = shotMusic
       this.img = new Image();
       this.img.src = images.pea;
     }
@@ -532,6 +547,7 @@ window.onload = () => {
     gameoverimg.draw();
     winner(kills1, kills2)
     board1.music.pause();
+    gameoverimg.music.play()
   }
 
   let positionY;
@@ -599,6 +615,7 @@ window.onload = () => {
     ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
     gameoverimg2.draw();
     winner(kills1, kills2)
+    gameoverimg.music.play()
   }
 
   let positionY2;

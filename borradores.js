@@ -313,3 +313,35 @@ function charge(letter) {
     }
   })
 }
+
+//MUSIC
+
+let gruñidoMusic = ""
+let shotMusic = ""
+let loseMusic = ""
+
+let zombiesMusic = ""
+
+class Zombie {
+  this.music = new Audio()
+  this.music.src = gruñidoMusic
+}
+
+zombieGenerator2 {
+  zombie.music.play()
+}
+
+class Bullet {
+  this.music = new Audio()
+  this.music.src = shotMusic
+}
+
+class GameOverImg {
+  this.music = new Audio()
+  this.music.src = loseMusic
+}
+
+class GameOverImg2 {
+  this.music = new Audio()
+  this.music.src = loseMusic
+}
