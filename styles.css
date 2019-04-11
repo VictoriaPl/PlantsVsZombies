@@ -71,7 +71,8 @@ canvas {
 }
 
 #winnerText {
-  background-color: white;
+  color: white;
+  font-weight: 900
 }
 
 #legend__bottom__right{
