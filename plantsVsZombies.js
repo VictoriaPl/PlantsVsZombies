@@ -9,6 +9,8 @@ window.onload = () => {
   let sunArr = [];
   let interval;
   let multi = false;
+  let kills1 = 0
+  let kills2 = 0
 
   let shoots2 = [];
   let zombiesArr2 = [];
@@ -490,6 +492,7 @@ window.onload = () => {
     clearInterval(interval);
     ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
     gameoverimg.draw();
+    winner(kills1, kills2)
   }
 
   let positionY;
@@ -520,6 +523,8 @@ window.onload = () => {
         if (b.isTouching(z)) {
           shoots.splice(bi, 1);
           zombiesArr.splice(zi, 1);
+          kills1++
+          document.getElementById("killsCounter1").innerHTML = kills1
         }
       });
     });
@@ -553,6 +558,7 @@ window.onload = () => {
     clearInterval(interval);
     ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
     gameoverimg2.draw();
+    winner(kills1, kills2)
   }
 
   let positionY2;
@@ -583,9 +589,25 @@ window.onload = () => {
         if (bullet.isTouching(zombie)) {
           shoots2.splice(bi, 1);
           zombiesArr2.splice(zi, 1);
+          kills2++
+          document.getElementById("killsCounter2").innerHTML = kills2
         }
       });
     });
+  }
+
+  function winner(kills1, kills2){
+    if(kills1 > kills2){
+      document.getElementById("winnerText").innerText = `Player1 wins!! Total score: ${kills1} Player2 lose :( Final score: ${kills2}`;
+    } else if (kills2 > kills1){
+      document.getElementById("winnerText").innerText = `Player2 wins!! Final score: ${kills2} Player1 lose :( Total score: ${kills1}`;
+    } else {
+      document.getElementById("winnerText").innerText = "Same score!! Play again!";
+    }
+  }
+
+  function reset(){
+    window.location.reload();
   }
 
   //LISTENERS
@@ -598,6 +620,10 @@ window.onload = () => {
     button1Disapear();
     button2Disapear();
   };
+
+  document.getElementById("resetButton").onclick = function() {
+    reset();
+  }
 
   document.addEventListener("keydown", e => {
     switch (e.keyCode) {

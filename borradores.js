@@ -261,3 +261,22 @@ class Zombie2 {
       })
     })
   }
+
+
+//SEEDS
+let seeds1 = 25
+let seeds2 = 25
+
+class PowerBar {
+  constructor(){
+    this.x = 0
+    this.y = 0
+  }
+  draw(seeds1){
+    ctx1.fillStyle = "green";
+    ctx1.fillRect(0,0, this.seeds * 22, 10)
+  }
+}
+
+
+

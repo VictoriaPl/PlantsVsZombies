@@ -55,8 +55,8 @@ canvas {
 #legend__bottom{
   display: grid;
   width: 100%;
-  grid-template-columns: 40% 40%;
-  grid-template-rows: auto;
+  grid-template-columns: 40% 20% 40%;
+  grid-template-rows: auto auto;
   background-color: rgba(0,0,0, 0.7);
   padding-bottom: 7%;
   padding-top: 1%;
@@ -65,17 +65,21 @@ canvas {
 #legend__bottom__left{
   display: grid;
   width: 70%;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 20% 40% 40%;
   grid-template-rows: auto;
-  padding-left: 40%;
+  padding-left: 20%;
+}
+
+#winnerText {
+  background-color: white;
 }
 
 #legend__bottom__right{
   display: grid;
   width: 70%;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 40% 40% 20%;
   grid-template-rows: auto;
-  padding-left: 60%;
+  padding-left: 30%;
 }
 
 .legend__img__bottom {
@@ -88,6 +92,22 @@ canvas {
 
 .text__charge{
   width: 40%;
+}
+
+#killsCounter1 {
+  background-color: white;
+  padding: 0% 10%;
+}
+
+#killsCounter2 {
+  background-color: white;
+  padding: 0% 10%;
+}
+
+#resetButton{
+  background-color: white;
+  padding: 2%;
+  margin-left: 15%;
 }
 
 #player1 {
@@ -120,3 +140,4 @@ canvas {
   position: absolute;
   display: inherit;
 }
+
