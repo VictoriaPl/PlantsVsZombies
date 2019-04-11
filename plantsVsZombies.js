@@ -450,10 +450,14 @@ window.onload = () => {
 
     frames++;
 
-    shoots.forEach(bullet => {
-      bullet.draw();
-      bullet.move();
-    });
+    if(seeds1 < 0){
+      seeds1 = 0
+    } else if (seeds1 > 0){
+      shoots.forEach(bullet => {
+        bullet.draw();
+        bullet.move();
+      });
+    }
 
     checkCollition();
 
@@ -481,10 +485,15 @@ window.onload = () => {
       }
       zombieGenerator2(zombiesArr2);
   
-      shoots2.forEach(bullet2 => {
-        bullet2.draw();
-        bullet2.move();
-      });
+
+      if(seeds2 < 0){
+        seeds2 = 0
+      } else if (seeds2 > 0){
+        shoots2.forEach(bullet2 => {
+          bullet2.draw();
+          bullet2.move();
+        });
+      }
   
       checkCollition2();
 

@@ -345,3 +345,33 @@ class GameOverImg2 {
   this.music = new Audio()
   this.music.src = loseMusic
 }
+
+//infinite seeds
+
+if(seeds1 < 0){
+  seeds1 = 0
+} else if (seeds1 === 0){
+  shoots.forEach(bullet => {
+    bullet.draw();
+    bullet.move();
+  });
+}
+
+if(seeds2 < 0){
+  seeds2 = 0
+} else if (seeds2 === 0){
+  shoots2.forEach(bullet2 => {
+    bullet2.draw();
+    bullet2.move();
+  });
+}
+
+  // shoots.forEach(bullet => {
+    //   bullet.draw();
+    //   bullet.move();
+    // });
+
+// shoots2.forEach(bullet2 => {
+      //   bullet2.draw();
+      //   bullet2.move();
+      // });
