@@ -1,8 +1,10 @@
 //Variables
+
 let shoots2 = []
 let zombiesArr2 = []
 let sunArr2 = []
 let interval2
+
 //CLASES
 
 class Plant2 {
