@@ -272,11 +272,44 @@ class PowerBar {
     this.x = 0
     this.y = 0
   }
-  draw(seeds1){
+  draw(){
     ctx1.fillStyle = "green";
-    ctx1.fillRect(0,0, this.seeds * 22, 10)
+    ctx1.fillRect(0,0, seeds1 * 22, 10)
   }
 }
 
+class PowerBar2 {
+  constructor(){
+    this.x = 0
+    this.y = 0
+  }
+  draw(){
+    ctx2.fillStyle = "green";
+    ctx2.fillRect(0,0, seeds2 * 22, 10)
+  }
+}
 
+let powerBar1 = new PowerBar()
+let powerBar2 = new PowerBar2()
 
+function update(){
+  powerBar1.draw()
+  powerBar2.draw()
+}
+
+//CHARGE
+
+function charge(letter) {
+  sunArr.map((s, si) => {
+    if(letter === "A"){
+      sunArr.splice(si, 1)
+      seeds1+=5
+    }
+  })
+  sunArr2.map((su, si2) => {
+    if(letter === "K"){
+      sunArr2.splice(si2, 1)
+      seeds2+=5
+    }
+  })
+}

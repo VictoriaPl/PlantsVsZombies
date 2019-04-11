@@ -11,6 +11,8 @@ window.onload = () => {
   let multi = false;
   let kills1 = 0
   let kills2 = 0
+  let seeds1 = 25
+  let seeds2 = 25
 
   let shoots2 = [];
   let zombiesArr2 = [];
@@ -28,6 +30,8 @@ window.onload = () => {
     gameOver: "images/gameOver.png"
   };
 
+  let music = "music/Plants vs. Zombies (Main Theme).mp3"
+
   //CLASES Y CONSTRUCTORES
 
   class Board1 {
@@ -36,10 +40,12 @@ window.onload = () => {
       this.y = 0;
       this.height = 300;
       this.width = 550;
+      this.music = new Audio();
+      this.music.src = music;
       this.img = new Image();
       this.img.src = img;
       this.img.onload = () => {
-        this.draw();
+      this.draw();
       };
     }
     draw() {
@@ -337,6 +343,28 @@ window.onload = () => {
     }
   }
 
+  class PowerBar {
+    constructor(){
+      this.x = 0
+      this.y = 0
+    }
+    draw(){
+      ctx1.fillStyle = "yellow";
+      ctx1.fillRect(0,0, seeds1 * 36, 10)
+    }
+  }
+  
+  class PowerBar2 {
+    constructor(){
+      this.x = 0
+      this.y = 0
+    }
+    draw(){
+      ctx2.fillStyle = "yellow";
+      ctx2.fillRect(0,0, seeds2 * 36, 10)
+    }
+  }
+
   //DEFINICIONES
 
   const board1 = new Board1(images.bg);
@@ -369,6 +397,9 @@ window.onload = () => {
   const flower2_3 = new Flower2(190);
   const flower2_4 = new Flower2(260);
   const flower2_5 = new Flower2(330);
+
+  let powerBar1 = new PowerBar()
+  let powerBar2 = new PowerBar2()
   //FUNCTIONS
 
   function update() {
@@ -392,7 +423,7 @@ window.onload = () => {
     flower1_4.draw();
     flower1_5.draw();
 
-    if (frames % 300 === 0) {
+    if (frames % 100 === 0) {
       sunArr.unshift(new Sun(randomSun()));
     }
     sunGenerator(sunArr);
@@ -425,7 +456,7 @@ window.onload = () => {
       flower2_4.draw();
       flower2_5.draw();
   
-      if (frames % 300 === 0) {
+      if (frames % 100 === 0) {
         sunArr2.unshift(new Sun2(randomSun2()));
       }
       sunGenerator2(sunArr2);
@@ -441,7 +472,12 @@ window.onload = () => {
       });
   
       checkCollition2();
+
+      powerBar2.draw()
     }
+
+    powerBar1.draw()
+ 
   }
 
   function randomPosition() {
@@ -470,10 +506,12 @@ window.onload = () => {
   function runSinglePlayer() {
     if (interval) return;
     interval = setInterval(update, 1000 / 20);
+    board1.music.play()
   }
 
   function runMultiplayer() {
     multi = true;
+    board1.music.play()
   }
 
   function zombieGenerator(zombiesArr) {
@@ -493,6 +531,7 @@ window.onload = () => {
     ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
     gameoverimg.draw();
     winner(kills1, kills2)
+    board1.music.pause();
   }
 
   let positionY;
@@ -515,6 +554,7 @@ window.onload = () => {
 
   function shoot() {
     shoots.push(new Bullet(positionY));
+    seeds1--
   }
 
   function checkCollition() {
@@ -581,6 +621,7 @@ window.onload = () => {
 
   function shoot2() {
     shoots2.push(new Bullet2(positionY2));
+    seeds2--
   }
 
   function checkCollition2() {
@@ -608,6 +649,21 @@ window.onload = () => {
 
   function reset(){
     window.location.reload();
+  }
+
+  function charge(letter) {
+    sunArr.map((s, si) => {
+      if(letter === "A"){
+        sunArr.splice(si, 1)
+        seeds1+=2
+      }
+    })
+    sunArr2.map((su, si2) => {
+      if(letter === "K"){
+        sunArr2.splice(si2, 1)
+        seeds2+=2
+      }
+    })
   }
 
   //LISTENERS
